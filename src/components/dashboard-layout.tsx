@@ -37,7 +37,6 @@ export default function DashboardLayout({
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get user info from cookies
     const cookies = document.cookie.split("; ");
     const userNameCookie = cookies.find((cookie) =>
       cookie.startsWith("user_name=")
@@ -56,13 +55,12 @@ export default function DashboardLayout({
   }, []);
 
   const handleLogout = () => {
-    // Remove cookies
     document.cookie = "auth_token=; path=/; max-age=0";
     document.cookie = "user_name=; path=/; max-age=0";
     document.cookie = "user_email=; path=/; max-age=0";
 
     toast.success("You have been logged out successfully");
-    navigate("/login");
+    navigate("/");
   };
 
   const getPageTitle = () => {
@@ -84,7 +82,38 @@ export default function DashboardLayout({
       icon: HelpCircle,
       current: location.pathname === "/faq",
     },
+    {
+      name: "Log out",
+      icon: LogOut,
+      action: handleLogout, // Renamed from href to action for clarity
+      current: false, // Logout is an action, not a current page
+    },
   ];
+
+  // Helper function to render navigation item content (icon + name)
+  const renderNavItemContent = (item: (typeof navigation)[0]) => (
+    <>
+      <item.icon
+        className={cn(
+          "mr-3 h-5 w-5 flex-shrink-0",
+          item.current
+            ? "text-gray-500"
+            : "text-gray-400 group-hover:text-gray-500"
+        )}
+        aria-hidden="true"
+      />
+      {item.name}
+    </>
+  );
+
+  // Helper function to get common classes for nav items
+  const getNavItemClasses = (current: boolean) =>
+    cn(
+      "group flex items-center rounded-md px-2 py-2 text-sm font-medium w-full text-left", // Added w-full and text-left for button consistency
+      current
+        ? "bg-gray-100 text-gray-900"
+        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+    );
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -108,29 +137,25 @@ export default function DashboardLayout({
         </div>
         <nav className="mt-5 px-2">
           <div className="space-y-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={cn(
-                  "group flex items-center rounded-md px-2 py-2 text-sm font-medium",
-                  item.current
-                    ? "bg-gray-100 text-gray-900"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                )}
-              >
-                <item.icon
-                  className={cn(
-                    "mr-3 h-5 w-5 flex-shrink-0",
-                    item.current
-                      ? "text-gray-500"
-                      : "text-gray-400 group-hover:text-gray-500"
-                  )}
-                  aria-hidden="true"
-                />
-                {item.name}
-              </Link>
-            ))}
+            {navigation.map((item) =>
+              item.href ? (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={getNavItemClasses(item.current)}
+                >
+                  {renderNavItemContent(item)}
+                </Link>
+              ) : item.action ? (
+                <button
+                  key={item.name}
+                  onClick={item.action}
+                  className={getNavItemClasses(item.current)}
+                >
+                  {renderNavItemContent(item)}
+                </button>
+              ) : null
+            )}
           </div>
         </nav>
       </div>
@@ -143,30 +168,29 @@ export default function DashboardLayout({
           </div>
           <nav className="mt-5 px-2">
             <div className="space-y-1">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={cn(
-                    "group flex items-center rounded-md px-2 py-2 text-sm font-medium",
-                    item.current
-                      ? "bg-gray-100 text-gray-900"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                  )}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <item.icon
-                    className={cn(
-                      "mr-3 h-5 w-5 flex-shrink-0",
-                      item.current
-                        ? "text-gray-500"
-                        : "text-gray-400 group-hover:text-gray-500"
-                    )}
-                    aria-hidden="true"
-                  />
-                  {item.name}
-                </Link>
-              ))}
+              {navigation.map((item) =>
+                item.href ? (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={getNavItemClasses(item.current)}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {renderNavItemContent(item)}
+                  </Link>
+                ) : item.action ? (
+                  <button
+                    key={item.name}
+                    onClick={() => {
+                      if (item.action) item.action();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={getNavItemClasses(item.current)}
+                  >
+                    {renderNavItemContent(item)}
+                  </button>
+                ) : null
+              )}
             </div>
           </nav>
         </SheetContent>
@@ -224,7 +248,7 @@ export default function DashboardLayout({
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarImage
-                        src="/placeholder.svg?height=32&width=32"
+                        src="/placeholder.svg?height=32&width=32" // You might want to replace this with a dynamic user image or a better placeholder
                         alt="User"
                       />
                       <AvatarFallback>
@@ -237,18 +261,14 @@ export default function DashboardLayout({
                   <DropdownMenuLabel>
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none">
-                        {userName}
+                        {userName || "User"}
                       </p>
                       <p className="text-xs leading-none text-muted-foreground">
-                        {userEmail}
+                        {userEmail || "No email"}
                       </p>
                     </div>
                   </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
+                  {/* Removed DropdownMenuSeparator and LogOut DropdownMenuItem */}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>

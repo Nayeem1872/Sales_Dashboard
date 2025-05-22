@@ -63,8 +63,6 @@ export default function FAQSettingsPage() {
   const [currentFAQ, setCurrentFAQ] = useState<FAQ | null>(null);
   const [newQuestion, setNewQuestion] = useState("");
   const [newAnswer, setNewAnswer] = useState("");
-
-  // Load FAQs from localStorage on component mount
   useEffect(() => {
     const savedFAQs = localStorage.getItem("faqs");
     if (savedFAQs) {
