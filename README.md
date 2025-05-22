@@ -1,54 +1,91 @@
-# React + TypeScript + Vite
+# Sales Dashboard Admin Panel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive sales dashboard built with React, providing comprehensive analytics, customer management, and administrative tools.
 
-Currently, two official plugins are available:
+## 🚀 How to Run the Project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Installation
 
-## Expanding the ESLint configuration
+1. Clone the repository:
+   \`\`\`bash
+   git clone https://github.com/yourusername/sales-dashboard.git
+   cd sales-dashboard
+   \`\`\`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2. Install dependencies:
+   \`\`\`bash
+   npm install
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+   # or
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+   yarn
+   \`\`\`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3. Start the development server:
+   \`\`\`bash
+   npm run dev
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+   # or
+
+   yarn dev
+   \`\`\`
+
+4. Open your browser and navigate to:
+   \`\`\`
+   http://localhost:5173
+   \`\`\`
+
+### Login Credentials
+
+Use the following credentials to log in:
+
+- Email: `admin@dot.com`
+- Password: `123456`
+
+## 🛠️ Technologies Used
+
+- **React** - Frontend library for building user interfaces
+- **Vite** - Next-generation frontend tooling
+- **React Router** - Routing and navigation for React applications
+- **TypeScript** - Static type checking
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - Reusable UI components built with Radix UI and Tailwind
+- **Framer Motion** - Animation library for React
+- **React Simple Maps** - Geographical map components for React
+- **Lucide React** - Beautiful & consistent icon set
+- **date-fns** - Modern JavaScript date utility library
+
+## 🌟 Features
+
+- **Authentication System** - Cookie-based authentication with protected routes
+- **Interactive Dashboard** - Real-time data visualization with multiple chart types
+- **Customer Management** - Sortable and filterable customer data table
+- **FAQ Management** - Create, edit, and delete FAQs
+- **Responsive Design** - Fully responsive layout that works on mobile, tablet, and desktop
+- **Data Export** - Export data to CSV format
+
+## 🧩 Assumptions & Extra Features
+
+1. **Mock Authentication** - The project uses cookie-based authentication with mock credentials for demonstration purposes. In a production environment, this would be replaced with a proper authentication system.
+
+2. **Local Storage for Data Persistence** - FAQ data is stored in the browser's localStorage for demonstration. In a real application, this would be replaced with API calls to a backend server.
+
+3. **Enhanced UI/UX Features**:
+
+   - Animated transitions and micro-interactions
+   - Elegant login page with gradient background and frosted glass effect
+   - Tabbed interface for better organization of dashboard content
+   - Real-time data updates simulation
+   - Interactive geographical data visualization
+
+4. **Sidebar Navigation** - Implemented a responsive sidebar with mobile support and a logout button at the bottom for easy access.
+
+5. **Advanced Data Visualization** - Multiple chart types (bar, line, area, pie) with interactive tooltips and animations.
+
+6. **Customizable Tables** - Tables with sortable columns, filters, and toggleable column visibility.
+
+## 📝 Notes
+
+- This project is for demonstration purposes and uses mock data.
+- The dashboard simulates real-time data updates but doesn't connect to an actual backend.
+- For a production application, you would need to implement proper API integration, error handling, and security measures.
