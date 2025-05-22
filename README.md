@@ -4,6 +4,8 @@ A modern, responsive sales dashboard admin panel built with React, providing com
 
 ---
 
+## 📋 Live (https://sales-dashboard-l78g.vercel.app/)
+
 ## 📋 Table of Contents
 
 - [🚀 How to Run the Project](#-how-to-run-the-project)
